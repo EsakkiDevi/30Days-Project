@@ -1,0 +1,114 @@
+:root {
+  --base-color: white;
+  --base-varient: #f0f0f0;
+  --secondary-varient: #e5e5e5;
+  --text-color: #111528;         /* Black text */
+  --secondary-text: #232738;
+  --primary-color: #3a435d;
+  --accent-color: #0071ff;       /* Blue text stays same */
+}
+
+
+.darkmode {
+  --base-color: #1a1a1a;         /* Dark gray for body */
+  --base-varient: #363636;       /* Darker gray for sections */
+  --secondary-varient: #444343;  /* Slightly lighter gray for alternate sections */
+  --text-color: #ffffff;         /* All normal text becomes white */
+  --secondary-text: #cccccc;
+  --primary-color: #aaaaaa;
+  --accent-color: #0071ff;       /* Blue stays same */
+}
+ #download{
+  color: #1a1a1a;
+  font-weight: bold;
+}
+#projects img {
+  width: 50%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+body {
+  background-color: var(--base-color);
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+section:nth-child(odd) {
+  background-color: var(--base-varient);
+}
+section:nth-child(even) {
+  background-color: var(--secondary-varient);
+}
+
+
+header, footer {
+  background-color: var(--base-varient);
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
+  font-size: larger;
+  font-weight: bold;
+}
+
+
+div, main, article {
+  background-color: var(--base-varient);
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+
+#darkbutton {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: var(--base-varient);
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 90px;
+  right: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.4s, color 0.4s;
+  z-index: 1000;
+}
+
+#darkbutton:hover {
+  background-color: var(--secondary-varient);
+}
+
+
+#darkbutton .light_icons {
+  display: block;
+}
+#darkbutton .dark_icons {
+  display: none;
+}
+.darkmode #darkbutton .light_icons {
+  display: none;
+}
+.darkmode #darkbutton .dark_icons {
+  display: block;
+}
+
+
+a, .accent, .highlight {
+  color: var(--accent-color);
+}
+
+.darkmode *:not(a):not(.accent):not(.highlight) {
+  color: var(--text-color) !important;
+}
+
+
+* {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
