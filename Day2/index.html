@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoListt</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+      body{
+        background-color: gray;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        height: 100vh;
+        margin: 0;
+      }
+    #container{
+              width:30%;
+             max-height: 500px;
+              background-color: white;
+              box-shadow: 1px 1px 10px darkgrey;
+              border-radius: 10px;
+              padding: 10px;
+             
+             
+                
+         }
+         #searchbox{
+            border:2px solid black;
+            border-radius: 10px;
+            padding:5px;
+
+         }
+        
+         #searchcontainer{
+            position: relative;
+            width:60%;
+            height: 40px;
+            border: 1px solid black;
+            align-items: center;
+            justify-content: center;
+            display:flex;
+             border-radius: 6px;
+             padding: 5px 10px;
+            box-sizing: border-box;
+            background-color:white;
+            margin-left: 20px;
+            flex: 1;
+          
+         }
+         #searchcontainer #searchbox{
+          width:80%;
+          height:40px;
+           flex:1;
+          border:none;
+          outline: none;
+            font-size: 16px;
+            padding: 8px;
+            border-radius: 0;
+
+           
+            
+           }
+         #searchcontainer #searchicon{
+            color: #555;
+            font-size: 40px;
+           margin-left: 20px;
+         }
+         #menuicon{
+          font-size: 30px;
+         }
+         #menu-button{
+          padding: 6px;
+          border-radius: 10px;
+          background-color: #8d8989;
+          height:100%;
+          width:25%;
+          left:20px;
+          top:45%;
+
+         }
+         #menu-button:hover{
+          transform: scaleX(1.05);
+          background-color: #635e5e;
+         }
+         #addbtn{
+            margin-left: 20px;
+          background-color: indigo;
+          color: white;
+          padding: 6px;
+          border-radius: 10px;
+          height: 41px;
+         }
+         #addbtn:hover{
+           transform: scaleX(1.05);
+          background-color: rgb(59, 9, 95);
+         }
+         #addicon{
+          font-size: 30px;
+         }
+         #deletebtn{
+          margin-left: 20px;
+          background-color: rgb(231, 46, 46);
+          color: black;
+          padding: 6px;
+          border-radius: 10px;
+          height: 41px;
+         }
+         #deleteicon{
+          font-size: 30px;
+
+         }
+         #completebtn{
+            margin-left: 20px;
+          background-color: rgb(17, 190, 31);
+          color: black;
+          padding: 6px;
+          border-radius: 10px;
+          height: 41px;
+         }
+          #completeicon{
+          font-size: 30px;
+
+         }
+           #deletebtn:hover{
+           transform: scaleX(1.05);
+          background-color: rgb(156, 15, 15);
+         }
+         #addcontainer{
+          position: fixed;
+             top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+             width: 400px;
+             height: 400px;
+             border: 3px solid black;
+             border-radius: 10px;
+            box-shadow: 0px 0px 10px #555;
+            background-color: white;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+           
+
+         
+          
+
+         }
+         h3{
+              font-size: x-large;
+               text-align: center;
+               text-shadow: 0px 0px 12px #555;
+                margin-top: 20px;
+
+              
+         }
+         #taskinput{
+          width:300px;
+          border: 2px solid black;
+          padding: 6px;
+          border-radius: 10px;
+          margin-top: 20px;
+          margin-left: 20px;
+         }
+         #description{
+          width:300px;
+          height:180px;
+           border: 2px solid black;
+          padding: 6px;
+          border-radius: 10px;
+          margin-top: 20px;
+           margin-left: 20px;;
+         }
+
+         #addtaskbtn{
+          color:black;
+          border: 2px solid black;
+          padding:6px;
+          border-radius: 6px;
+          background-color: green;
+          margin-left: 40px;
+          width:80px
+        
+         }
+         #cancelbtn{
+          color:black;
+          border: 2px solid black;
+          padding:6px;
+          border-radius: 6px;
+          background-color: red;
+            margin-left: 50px;
+           
+             width:80px
+         }
+         #buttonrow {
+           margin-top: 10px;
+          }
+          .taskItem{
+             margin-left: 10px;
+             font-size: 20px;
+
+          }
+          .editbtn{
+            margin-left: 30px;
+            border: 2px #8d8989;
+            border-radius: 10px;
+          }
+          #title{
+            position:sticky;
+            z-index:9999;
+            top: 0;
+            padding: 10px;
+             background: white; 
+             align-items: center;
+             gap: 10px;  
+          }
+          #listcontainer{
+           flex: 1;   
+           max-height: 300px;            
+    overflow-y: auto;      
+    overflow-x: hidden;
+    padding-right: 5px;
+          }
+         
+
+
+
+        
+        
+  </style>
+</head>
+<body>
+    <div  id="container">
+        <h1 class="text-2xl font-bold text-center text-indigo-600 mb-6">To-Do App</h1>
+        <div class="flex mb-4"id="title">
+          
+            <!-- <button id="menu-button">
+                <span id="menuicon" class="material-icons">menu</span>
+             </button> -->
+
+             <div id="searchcontainer">
+            <input type="text" id="searchbox" placeholder="search the Task">
+            <i id="searchicon" class="material-icons">search</i>
+            </div>
+             <button id="addbtn">
+                <i id="addicon" class="material-icons">add</i>
+           </button>
+
+             <button id="deletebtn">
+                <i id="deleteicon" class="material-icons">delete</i>
+           </button>
+           <button id="completebtn">
+                <i id="completeicon" class="material-icons">done_all</i>
+            </button>
+            
+        
+        
+        </div >
+        <div id="listcontainer">
+        <ul id="tasklist" class="space-y-2">
+           
+        </ul >
+        </div>
+
+
+       
+
+  
+    </div>
+
+     <div id="addcontainer">
+
+            <h3> Add Task </h3>
+            <input type="text" placeholder="Enter the Task..." id="taskinput">
+            <textarea placeholder="description..." id="description"></textarea>
+          <div id="buttonrow">
+            <button id="addtaskbtn">Add</button>
+            <button id="cancelbtn">cancel</button>
+          </div>
+        </div>
+<script>
+
+  const addcontainer=document.getElementById("addcontainer");
+  const addtaskbtn=document.getElementById("addtaskbtn");
+  const cancelbtn=document.getElementById("cancelbtn");
+
+  
+  
+ window.onload=displayTask;
+
+  const taskinput=document.getElementById("taskinput");
+  const description=document.getElementById("description");
+
+  const container=document.getElementById("container");
+  const addbtn =document.getElementById("addbtn");
+ const deletebtn=document.getElementById("deletebtn");
+ 
+ const tasklist=document.getElementById("tasklist");
+ 
+document.getElementById("searchbox").addEventListener("input", liveSearch);
+
+ let editingIndex=null;
+
+ addbtn.addEventListener("click",()=>{
+ editingIndex=null;
+  taskinput.value="";
+  description.value="";
+  addtaskbtn.textContent="Add"
+  addcontainer.style.display="flex";
+  container.style.display="none";
+
+   
+
+ });
+
+
+ addtaskbtn.addEventListener("click",()=>{
+
+  const taskname=taskinput.value.trim();
+  const describe=description.value.trim();
+
+  if(taskname==="" || describe==="")
+ {
+    alert("Plese fill both");
+    return;
+ }
+
+ let tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+ if(editingIndex===null)
+ {
+  tasks.push({name:taskname,description:describe,completed:false});
+ 
+  
+ }
+ else{
+  tasks[editingIndex].name = taskname;
+  tasks[editingIndex].description = describe;
+
+  editingIndex=null;
+ }
+
+ localStorage.setItem("tasks",JSON.stringify(tasks));
+ addcontainer.style.display="none";
+  container.style.display="block";
+  taskinput.value="";
+  description.value="";
+displayTask();
+
+ });
+
+ function displayTask(){
+  tasklist.innerHTML="";
+
+  const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+  tasks.forEach((t,index)=>{
+
+     const li=document.createElement("li");
+ 
+
+  li.innerHTML=`<div class="taskItem">
+    <input type="checkbox" class="testCheck" data-index="${index}">
+    <span>
+     ${t.name}
+     </span>
+
+    ${
+     t.completed  ? `<span class="material-icons checkcircle" style="color:green">check_circle</span>`
+     : `<button class="material-icons editbtn" data-index="${index}">edit</button>`
+     }
+
+ 
+    </div>`;
+      
+        tasklist.appendChild(li);
+
+  });
+
+  const editbtn=document.querySelectorAll(".editbtn");
+  editbtn.forEach(btn=>{
+    btn.addEventListener("click",(e)=>{
+      editingIndex=e.target.getAttribute("data-index");
+      const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+
+      taskinput.value=tasks[editingIndex].name;
+      description.value=tasks[editingIndex].description;
+
+      addtaskbtn.textContent="Update";
+      addcontainer.style.display="flex";
+      container.style.display="none";
+
+    });
+  });
+ }
+
+ const completebtn=document.getElementById("completebtn");
+
+ completebtn.addEventListener("click",()=>{
+  let tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+
+  const checks=document.querySelectorAll(".testCheck");
+
+  checks.forEach(chk=>{
+    if(chk.checked){
+      let i=chk.getAttribute("data-index");
+      tasks[i].completed=true;
+    }
+  });
+
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+  displayTask();
+ });
+
+
+
+ cancelbtn.addEventListener("click",()=>{
+      taskinput.value="";
+  description.value="";
+  addcontainer.style.display="none";
+  container.style.display="block";
+
+ });
+
+
+
+ deletebtn.addEventListener("click",()=>{
+  let tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+
+  const checks=document.querySelectorAll(".testCheck");
+
+  let deleteIndexes=[];
+
+  checks.forEach(chk=>{
+    if(chk.checked){
+      deleteIndexes.push(Number(chk.dataset.index));
+
+
+    }
+  });
+
+  tasks=tasks.filter((t,index)=>
+  !deleteIndexes.includes(index));
+
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+  displayTask();
+ });
+
+
+ function liveSearch() {
+    const value = document.getElementById("searchbox").value.toLowerCase().trim();
+    const allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    // If search empty → show all tasks
+    if (value === "") {
+        displayTask();
+        return;
+    }
+
+    // Filter by title or description
+    const filtered = allTasks.filter(t =>
+        t.name.toLowerCase().includes(value) ||
+        t.description.toLowerCase().includes(value)
+    );
+
+    if (filtered.length === 0) {
+        tasklist.innerHTML = "<p style='text-align:center;color:gray'>Not Found</p>";
+        return;
+    }
+
+    renderFilteredTasks(filtered);
+}
+function renderFilteredTasks(filteredTasks) {
+    tasklist.innerHTML = "";
+
+    filteredTasks.forEach((t, index) => {
+
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+        <div class="taskItem">
+            <input type="checkbox" class="testCheck" data-index="${index}">
+            <span>${t.name}</span>
+
+            ${
+                t.completed
+                ? `<span class="material-icons ckeckcircle" style="color:green">check_circle</span>`
+                : `<button class="material-icons editbtn" data-index="${index}">edit</button>`
+            }
+        </div>
+        `;
+
+        tasklist.appendChild(li);
+    });
+
+    attachEditEvents(filteredTasks);
+}
+function attachEditEvents(filteredTasks) {
+    const editBtns = document.querySelectorAll(".editbtn");
+
+    editBtns.forEach(btn => {
+        btn.addEventListener("click", e => {
+            const realIndex = e.target.dataset.index;
+
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+            taskinput.value = tasks[realIndex].name;
+            description.value = tasks[realIndex].description;
+
+            editingIndex = realIndex;
+
+            addtaskbtn.textContent = "Update";
+            addcontainer.style.display = "flex";
+            container.style.display = "none";
+        });
+    });
+}
+
+
+  
+
+</script>
+   
+
+
+</body>
+</html>
